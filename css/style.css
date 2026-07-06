@@ -52,7 +52,7 @@ body {
   padding: 0 40px;
   background: rgba(10,10,10,0.9);
   backdrop-filter: blur(12px);
-  border-bottom: 1px solid var(--border);
+  
   opacity: 1 !important;
   visibility: visible !important;
 }
@@ -121,7 +121,7 @@ body {
   align-items: center;
   padding: calc(var(--nav-h) + 60px) 40px 80px;
   position: relative;
-  border-bottom: 1px solid var(--border);
+  
 }
 
 .hero::before {
@@ -179,7 +179,7 @@ body {
    ============================================= */
 .section {
   padding: var(--section-gap) 40px;
-  border-bottom: 1px solid var(--border);
+  
 }
 
 .section-label {
@@ -308,7 +308,7 @@ body {
   margin: 40px 0 40px;
   padding: 32px 0;
   border-top: 1px solid var(--border);
-  border-bottom: 1px solid var(--border);
+  
 }
 
 .stat-number {
@@ -484,7 +484,7 @@ body {
   gap: 32px;
   padding: 20px 0;
   border-top: 1px solid var(--border);
-  border-bottom: 1px solid var(--border);
+  
   margin-bottom: 24px;
 }
 
@@ -615,7 +615,7 @@ body {
   gap: 32px;
   padding: 20px 0;
   border-top: 1px solid var(--border);
-  border-bottom: 1px solid var(--border);
+  
   margin-bottom: 24px;
 }
 

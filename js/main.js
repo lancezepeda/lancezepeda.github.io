@@ -1,16 +1,26 @@
 /* =============================================
-   NAV — highlight active section on scroll
+   NAV — always visible, highlight active section
    ============================================= */
 const nav = document.querySelector('.nav');
 const sections = document.querySelectorAll('section[id]');
 const navAnchors = document.querySelectorAll('.nav-links a');
 
+// Keep nav always visible — never hide it
+nav.style.opacity = '1';
+nav.style.visibility = 'visible';
+nav.style.display = 'flex';
+
 window.addEventListener('scroll', () => {
+  // Only change border color on scroll, never hide the nav
   nav.style.borderBottomColor = window.scrollY > 60 ? 'transparent' : '';
+  // Force nav to always stay visible
   nav.style.opacity = '1';
   nav.style.visibility = 'visible';
 }, { passive: true });
 
+/* =============================================
+   ACTIVE NAV LINK on scroll
+   ============================================= */
 const sectionObserver = new IntersectionObserver((entries) => {
   entries.forEach(entry => {
     if (entry.isIntersecting) {
@@ -38,11 +48,13 @@ toggle.addEventListener('click', () => {
       flex-direction: column;
       position: absolute;
       top: 64px;
-      left: 0; right: 0;
+      left: 0;
+      right: 0;
       background: #0a0a0a;
       padding: 24px 20px;
       border-bottom: 1px solid #2a2a2a;
       gap: 20px;
+      z-index: 99;
     `;
   } else {
     navLinks.style.display = 'none';
@@ -50,11 +62,22 @@ toggle.addEventListener('click', () => {
   toggle.setAttribute('aria-expanded', String(menuOpen));
 });
 
+// Close mobile menu when any nav link is clicked
 navLinks.querySelectorAll('a').forEach(link => {
   link.addEventListener('click', () => {
     menuOpen = false;
-    navLinks.style.display = 'none';
+    if (window.innerWidth <= 600) {
+      navLinks.style.display = 'none';
+    }
   });
+});
+
+// Reset nav links display on window resize
+window.addEventListener('resize', () => {
+  if (window.innerWidth > 600) {
+    navLinks.style.cssText = '';
+    menuOpen = false;
+  }
 });
 
 /* =============================================
@@ -73,9 +96,9 @@ filterBtns.forEach(btn => {
     galleryItems.forEach(item => {
       const category = item.dataset.category;
       if (filter === 'all' || category === filter) {
-        item.classList.remove('hidden');
+        item.style.display = '';
       } else {
-        item.classList.add('hidden');
+        item.style.display = 'none';
       }
     });
   });
@@ -85,7 +108,7 @@ filterBtns.forEach(btn => {
    SCROLL REVEAL
    ============================================= */
 const revealEls = document.querySelectorAll(
-  '.gallery-item, .service-card, .about-grid, .contact-headline, .section-header, .cert-item'
+  '.gallery-item, .service-card, .case-card, .about-grid, .contact-headline, .section-header, .cert-item'
 );
 
 const style = document.createElement('style');
@@ -93,11 +116,12 @@ style.textContent = '.revealed { opacity: 1 !important; transform: none !importa
 document.head.appendChild(style);
 
 const revealObserver = new IntersectionObserver((entries) => {
-  entries.forEach((entry, i) => {
+  entries.forEach(entry => {
     if (entry.isIntersecting) {
+      const delay = entry.target.dataset.delay || 0;
       setTimeout(() => {
         entry.target.classList.add('revealed');
-      }, entry.target.dataset.delay || 0);
+      }, delay);
       revealObserver.unobserve(entry.target);
     }
   });

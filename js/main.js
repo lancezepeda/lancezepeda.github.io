@@ -6,7 +6,13 @@ const sections = document.querySelectorAll('section[id]');
 const navAnchors = document.querySelectorAll('.nav-links a');
 
 window.addEventListener('scroll', () => {
-  nav.style.borderBottomColor = window.scrollY > 60 ? 'transparent' : '';
+  if (window.scrollY > 60) {
+    nav.style.borderBottomColor = 'transparent';
+    nav.style.opacity = '1';
+    nav.style.transform = 'translateY(0)';
+  } else {
+    nav.style.borderBottomColor = '';
+  }
 }, { passive: true });
 
 const sectionObserver = new IntersectionObserver((entries) => {
